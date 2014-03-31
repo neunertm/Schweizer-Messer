@@ -22,15 +22,19 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_gensrv()
 
 #common commands for building c++ executables and libraries
-#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
+rosbuild_add_library(${PROJECT_NAME} src/progress_info.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
+add_definitions(-std=c++0x -D__STRICT_ANSI__)
 
-rosbuild_add_gtest( ${PROJECT_NAME}_tests
+rosbuild_add_gtest(${PROJECT_NAME}_tests
   test/test_main.cpp
   test/maths.cpp
+  test/serialization_macros.cpp
+  test/numerical_comparisons.cpp
 )
+target_link_libraries(${PROJECT_NAME}_tests pthread)
